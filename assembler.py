@@ -83,6 +83,12 @@ def code(instruct):
 
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( rd, 3) + funct(instruct[0])
     
+    if(op == "0011"):        
+        rs = int(instruct[2].replace('$', ''))
+        rt = int(instruct[1].replace('$', ''))
+        imme = int(instruct[3].replace('$', ''))
+        return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
+
     rt = int(instruct[1].replace('$', ''))
     imme = int(instruct[2].replace('$', ''))
     rs = int(instruct[3].replace('$', ''))
@@ -99,5 +105,6 @@ for line in lines:
         continue
     instruct = treat(line).split()
     print(convertHexa(code(instruct)))
+    # print(line.strip() + " = " + code(instruct))
 
 print("f000")
