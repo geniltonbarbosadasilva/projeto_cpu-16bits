@@ -1,3 +1,6 @@
+def printf(x):
+    print(x, end=' ')
+
 def treat(line):
     line = line.replace('(', ' ')
     line = line.replace(')', ' ')
@@ -7,25 +10,25 @@ def treat(line):
     line = line.lower()
     return line
 
-def convertBin(number, digit):
+def convertBin(number, digit):    
     bin = ""
     while number >= 1:
         bin = bin + "{}".format(number%2)
-        number = number/2
+        number = int(number/2)
 
     while len(bin) < digit:
         bin = bin + "0"
     
     return bin[::-1];
 
-def convertHexa(bin):
+def convertHexa(bin):    
     hexadecimal = [ bin[0:4], bin[4:8], bin[8:12], bin[12:16]]
     result = ""
     
     for hexa in hexadecimal:
         sum = 0    
         hexa = hexa[::-1]
-        for i in range( 0, 4):
+        for i in range( 0, 4):            
             if(int(hexa[i]) == 1):
                 sum = sum + 2**i                
         result = result + " {}".format(sum)
@@ -95,7 +98,6 @@ def code(instruct):
     
     return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
 
-
 file = open("assembly", "r")
 
 lines = file.readlines()
@@ -104,7 +106,7 @@ for line in lines:
     if(len(line)==1):
         continue
     instruct = treat(line).split()
-    print(convertHexa(code(instruct)))
+    printf(convertHexa(code(instruct)))
     # print(line.strip() + " = " + code(instruct))
 
 print("f000")
