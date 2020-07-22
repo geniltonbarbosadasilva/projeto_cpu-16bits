@@ -10,8 +10,37 @@ def treat(line):
     line = line.lower()
     return line
 
+def addOne( number, digit):
+    number = number[::-1]
+    overFlow = 1
+    result = ""
+    for i in range(digit):
+        if ( number[i] == '1' and overFlow == 1):
+            result = "0" + result
+            continue
+        if ( number[i] == '1' or overFlow == 1):
+            result = "1" + result
+            overFlow = 0
+            continue
+        result = "0" + result
+
+    return result
+            
+
+def twoComplement( number, digit):
+    bin = convertBin( number*-1, digit)
+    bin = bin.replace( '0', 'i')
+    bin = bin.replace( '1', '0')
+    bin = bin.replace( 'i', '1')
+
+    return addOne( bin, digit)
+
 def convertBin(number, digit):    
     bin = ""
+
+    if number < 0:
+        return twoComplement( number, digit)
+
     while number >= 1:
         bin = bin + "{}".format(number%2)
         number = int(number/2)
@@ -53,14 +82,17 @@ def opCode(op):
         return "0011"
     if(op == "subi"):
         return "0100"
-    if(op == "jump"):
-        return "0101"
     if(op == "beq"):
+        return "0101"
+    if(op == "bnq"):
         return "0110"
-    if(op == "bne"):
+    if(op == "jump"):
         return "0111"
-    if(op == "jal"):
+    if(op == "jr"):
         return "1000"
+    if(op == "jal"):
+        return "1001"
+
 
 def funct(op):
     if(op == "add"): 
@@ -92,6 +124,12 @@ def code(instruct):
         imme = int(instruct[3].replace('$', ''))
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
 
+    if(op == "0101"):        
+        rs = int(instruct[1].replace('$', ''))
+        rt = int(instruct[2].replace('$', ''))
+        imme = int(instruct[3].replace('$', ''))
+        return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
+
     rt = int(instruct[1].replace('$', ''))
     imme = int(instruct[2].replace('$', ''))
     rs = int(instruct[3].replace('$', ''))
@@ -103,9 +141,10 @@ file = open("assembly", "r")
 lines = file.readlines()
 
 for line in lines:
-    if(len(line)==1):
+    if(len(line)==1 or '#' in line):
         continue
     instruct = treat(line).split()
+    # print(code(instruct))
     printf(convertHexa(code(instruct)))
     # print(line.strip() + " = " + code(instruct))
 
