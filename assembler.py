@@ -5,6 +5,7 @@ def treat(line):
     line = line.replace('(', ' ')
     line = line.replace(')', ' ')
     line = line.replace(',', ' ')
+    line = line.replace('   ', ' ')
     line = line.replace('  ', ' ')
     line = line.strip()
     line = line.lower()
@@ -84,14 +85,12 @@ def opCode(op):
         return "0100"
     if(op == "beq"):
         return "0101"
-    if(op == "bnq"):
-        return "0110"
     if(op == "jump"):
-        return "0111"
+        return "0110"
     if(op == "jr"):
-        return "1000"
+        return "0111"
     if(op == "jal"):
-        return "1001"
+        return "1000"
 
 
 def funct(op):
@@ -111,24 +110,29 @@ def funct(op):
 def code(instruct):
     op = opCode(instruct[0])
 
-    if(op == "0000"):
+    if(op == "0000"): # Tipo R
         rd = int(instruct[1].replace('$', ''))
         rs = int(instruct[2].replace('$', ''))
         rt = int(instruct[3].replace('$', ''))
 
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( rd, 3) + funct(instruct[0])
     
-    if(op == "0011"):        
+    if(op == "0011"): # addi
         rs = int(instruct[2].replace('$', ''))
         rt = int(instruct[1].replace('$', ''))
         imme = int(instruct[3].replace('$', ''))
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
 
-    if(op == "0101"):        
+    if(op == "0101"): # beq 
         rs = int(instruct[1].replace('$', ''))
         rt = int(instruct[2].replace('$', ''))
         imme = int(instruct[3].replace('$', ''))
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
+
+    if(op == "0110"): # jump 
+        imme = int(instruct[1].replace('$', ''))
+        return op + convertBin( imme, 12)
+    
 
     rt = int(instruct[1].replace('$', ''))
     imme = int(instruct[2].replace('$', ''))
