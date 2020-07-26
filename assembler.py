@@ -73,7 +73,14 @@ def convertHexa(bin):
     return result;
 
 def opCode(op):
-    if(op == "add" or op == "sub" or op == "and" or op ==  "or" or op ==  "not" or op == "slt"):
+    if(op == "add"  or 
+       op == "sub"  or 
+       op == "and"  or 
+       op == "or"   or 
+       op == "not"  or 
+       op == "slt"  or
+       op == "shl"  or
+       op == "shr" ):
         return "0000"
     if(op == "lw"):
         return "0001"
@@ -91,6 +98,10 @@ def opCode(op):
         return "0111"
     if(op == "jal"):
         return "1000"
+    if(op == "sg"):
+        return "1001"
+    if(op == "lb"):
+        return "1010"
 
 
 def funct(op):
@@ -104,8 +115,12 @@ def funct(op):
         return "011"
     if(op ==  "not"):  
         return "100"
-    if(op == "slt"):
+    if(op == "slt"):        
         return "101"
+    if(op == "shl"): # Desloca a esquerda
+        return "110"
+    if(op == "shr"): # Desloca a direita
+        return "111"        
 
 def code(instruct):
     op = opCode(instruct[0])
