@@ -132,7 +132,7 @@ def code(instruct):
 
         return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( rd, 3) + funct(instruct[0])
     
-    if(op == "0011"): # addi
+    if(op == "0011" or op == "0100"): # addi ou subi
         rs = int(instruct[2].replace('$', ''))
         rt = int(instruct[1].replace('$', ''))
         imme = int(instruct[3].replace('$', ''))
@@ -155,7 +155,9 @@ def code(instruct):
     
     return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
 
-file = open("assembly", "r")
+path = input()
+
+file = open( path, "r")
 
 lines = file.readlines()
 

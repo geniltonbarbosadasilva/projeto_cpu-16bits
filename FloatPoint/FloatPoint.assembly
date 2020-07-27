@@ -1,0 +1,58 @@
+# Memoria de Dados:
+#    0 -> 119
+#    1 -> 100
+#    2 -> 115
+#    3 -> 97
+#
+# $1 = 'w'
+# $2 = 'd'
+# $3 = 's'
+# $4 = 'a'
+# $5 = Point
+# $6 = Line
+
+lw $1, 0($0)
+lw $2, 1($0)
+lw $3, 2($0)
+lw $4, 3($0)
+addi $5, $0, 1
+addi $6, $0, 0
+
+# Start L:06
+
+sg   $5, 0($6)
+lb   $7, 0($0)
+
+# Up L:08
+
+beq  $7, $1, 1
+jump 13
+sg   $0, 0($6)
+subi $6, $6, 1
+jump 6
+
+# Right L:13
+
+beq  $7, $2, 1
+jump 19
+addi $0, $0, 1
+shr $5, $5, $0
+subi $0, $0, 1
+jump 6
+
+# Left L:19
+
+beq  $7, $4, 1
+jump 25
+addi $0, $0, 1
+shl $5, $5, $0
+subi $0, $0, 1
+jump 6
+
+# Down L:25
+
+beq  $7, $3, 1
+jump 6
+sg   $0, 0($6)
+addi $6, $6, 1
+jump 6
