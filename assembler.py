@@ -73,7 +73,7 @@ def convertHexa(bin):
     return result;
 
 def opCode(op):
-    if(op == "add"  or 
+    if(op == "add"  or
        op == "sub"  or 
        op == "and"  or 
        op == "or"   or 
@@ -82,26 +82,26 @@ def opCode(op):
        op == "shl"  or
        op == "shr" ):
         return "0000"
-    if(op == "lw"):
+    if(op == "lw"):     # Load Word
         return "0001"
-    if(op == "sw"):
+    if(op == "sw"):     # Store Word
         return "0010"
-    if(op == "addi"):
+    if(op == "addi"):   # Add immediate
         return "0011"
-    if(op == "subi"):
+    if(op == "subi"):   # Subtract immediate
         return "0100"
-    if(op == "beq"):
+    if(op == "beq"):    # Branch Equal
         return "0101"
-    if(op == "jump"):
+    if(op == "jump"):   # Jump
         return "0110"
-    if(op == "jr"):
+    if(op == "jr"):     # Jump Register
         return "0111"
-    if(op == "jal"):
-        return "1000"
-    if(op == "sg"):
-        return "1001"
-    if(op == "lb"):
-        return "1010"
+    if(op == "spc"):    # Store Program Counter
+        return "1000" 
+    if(op == "sg"):     # Store Graphics
+        return "1001" 
+    if(op == "lb"):     # Load buffer Keyboad
+        return "1010" 
 
 
 def funct(op):
@@ -115,11 +115,11 @@ def funct(op):
         return "011"
     if(op ==  "not"):  
         return "100"
-    if(op == "slt"):        
+    if(op == "slt"):    # Set Less To    
         return "101"
-    if(op == "shl"): # Desloca a esquerda
+    if(op == "shl"):    # Desloca a esquerda
         return "110"
-    if(op == "shr"): # Desloca a direita
+    if(op == "shr"):    # Desloca a direita
         return "111"        
 
 def code(instruct):
@@ -147,13 +147,24 @@ def code(instruct):
     if(op == "0110"): # jump 
         imme = int(instruct[1].replace('$', ''))
         return op + convertBin( imme, 12)
-    
 
-    rt = int(instruct[1].replace('$', ''))
-    imme = int(instruct[2].replace('$', ''))
-    rs = int(instruct[3].replace('$', ''))
+    if(op == "0111"): # jr
+        rt = int(instruct[1].replace('$', ''))
+        return op + convertBin( 0, 3) + convertBin( rt, 3) + convertBin( 0, 6)            
+
+    if(op == "1000"): # spc
+        rt = int(instruct[1].replace('$', ''))
+        return op + convertBin( 0, 3) + convertBin( rt, 3) + convertBin( 0, 6)            
+
+    if(op == "1010"): # lb
+        rt = int(instruct[1].replace('$', ''))
+        return op + convertBin( 0, 3) + convertBin( rt, 3) + convertBin( 0, 6)    
     
-    return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
+    if(op == "0001" or op == "0010" or op == "1001"): # lw, sw, sg
+        rt = int(instruct[1].replace('$', ''))
+        imme = int(instruct[2].replace('$', ''))
+        rs = int(instruct[3].replace('$', ''))
+        return op + convertBin( rs, 3) + convertBin( rt, 3) + convertBin( imme, 6)
 
 path = input()
 
