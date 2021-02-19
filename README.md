@@ -14,11 +14,13 @@ Para a execução deste projeto utilize o programa <a href="http://www.cburch.co
 
 ## Como executar ?
 Abra o arquivo .circ no Logsim e divirta-se!
+O codigo assembler.py pode ser usado para converte codigos em assembly para linguagem de maquina
+apropriada para esse processador, para usa-lo veja o conjunto de instruçoes abaixo.
 
 ## Conjunto de instruções:
 
 <blockquote>
-<p><em>Esse projeto de CPU dispõe de 8 registradores com 3 bits para endereçamento para acessa-los</em></p>
+<p>Esse projeto de CPU dispõe de 8 registradores com 3 bits para endereçamento</p>
 </blockquote>
 
 ```
@@ -30,14 +32,42 @@ Abra o arquivo .circ no Logsim e divirta-se!
 ### Tipo R:
     Formato:  Opcode RS RT RD Funct
 
-    <table>
-    <tr>
-        <th>Instrunção</th>
-        <th>Opcode</th>
-        <th>Funct</th>
-    </tr>
-    </table>
-    if(op == "lw"):     # Load Word
+```
+     ________________________________________
+    |   Instrunção  |   Opcode  |   Funct   |
+    |    add        |    0000   |    000    |
+    |    sub        |    0000   |    001    |
+    |    and        |    0000   |    010    |
+    |    or         |    0000   |    011    |
+    |    not        |    0000   |    100    |
+    |    slt        |    0000   |    101    |   # Set Less To            
+    |    shl        |    0000   |    110    |   # Desloca a esquerda
+    |    shr        |    0000   |    111    |   # Desloca a direita
+    -----------------------------------------
+    
+```    
+
+### Tipo I:
+    Formato:  Opcode RS RT Imediato
+
+```
+     ________________________________________
+    |   Instrunção  |   Opcode  |   Funct   |
+    |    add        |    0000   |    000    |
+    |    sub        |    0000   |    001    |
+    |    and        |    0000   |    010    |
+    |    or         |    0000   |    011    |
+    |    not        |    0000   |    100    |
+    |    slt        |    0000   |    101    |   # Set Less To            
+    |    shl        |    0000   |    110    |   # Desloca a esquerda
+    |    shr        |    0000   |    111    |   # Desloca a direita
+    -----------------------------------------
+    
+```    
+
+
+    
+    Load Word
         return "0001"
     if(op == "sw"):     # Store Word
         return "0010"
