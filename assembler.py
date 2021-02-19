@@ -49,7 +49,7 @@ def convertBin(number, digit):
     while len(bin) < digit:
         bin = bin + "0"
     
-    return bin[::-1];
+    return bin[::-1]
 
 def convertHexa(bin):    
     hexadecimal = [ bin[0:4], bin[4:8], bin[8:12], bin[12:16]]
@@ -70,7 +70,7 @@ def convertHexa(bin):
     result = result.replace(" 14", "e")
     result = result.replace(" 15", "f")
     result = result.replace(" ", "")
-    return result;
+    return result
 
 def opCode(op):
     if(op == "add"  or
