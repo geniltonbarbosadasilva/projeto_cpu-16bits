@@ -4,8 +4,7 @@
 <p><em>Projeto de caminho de dados de uma CPU 16 bits monociclo ao nível de portas lógicas, realizado utilizando o simulador de lógica digital Logisim 2.7.1</em></p>
 </blockquote>  
 
-<p align="center" display="inline">    
-    <img src="print-screen2.png" width=500>
+<p>        
     <img src="print-screen1.png" width=500>
 </p>
 
